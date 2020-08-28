@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <!-- pybo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'simple-sidebar.css' %}">
+    <!-- jQuery JS -->
+    <script src="{% static 'jquery-3.5.1.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+
+    <title>Hello, pybo!</title>
+</head>
+<body>
+<!--네비게이션바-->
+{% include 'navbar.html' %}
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">{{ request.user.username }} </div>
+      <div class="list-group list-group-flush">
+        <a href="{% url 'common:visitor' %}" class="list-group-item list-group-item-action bg-light">방명록</a>
+        <a href="{% url 'pybo:list' %}" class="list-group-item list-group-item-action bg-light">내가 쓴 글</a>
+        <a href="{% url 'pybo:my_answer' %}" class="list-group-item list-group-item-action bg-light">내가 답변한 글</a>
+        <a href="{% url 'pybo:my_voter' %}" class="list-group-item list-group-item-action bg-light">내가 추천한 글</a>
+        <a href="{% url 'common:profile' %}" class="list-group-item list-group-item-action bg-light">내 정보</a>
+        <a href="https://www.google.com" target="_blank" class="list-group-item list-group-item-action bg-light">도움말</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+{% block content %}
+{% endblock %}
+<!-- 기본 템플릿 안에 삽입될 내용 End -->
+    </div>
+</body>
+</html>
