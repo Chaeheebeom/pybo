@@ -42,6 +42,7 @@ urlpatterns=[
     path('person/question/delete/<int:question_id>/',person_views.person_question_delete, name='person_question_delete'),
     #내가 답변한 글
     path('answer/list/',person_views.my_answer,name='my_answer'),
+    path('answer/list/<int:question_id>',base_views.detail,name='my_answer_detail'),
     path('person/answer/modify/<int:answer_id>/',person_views.person_answer_modify, name='person_answer_modify'),
     path('person/answer/delete/<int:answer_id>/',person_views.person_answer_delete, name='person_answer_delete'),
     path('person/comment/create/answer/<int:answer_id>/', person_views.person_comment_create_answer, name='person_comment_create_answer'),
