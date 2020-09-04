@@ -69,7 +69,11 @@ $(document).ready(function(){
                             <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>
                         {% endif %}
                     </td>
-                    <td>{{ question.author.username }}</td>
+                    <td>
+                        <a href="{% url 'pybo:person_list' question.author.id %}">
+                        {{ question.author.username }}
+                        </a>
+                    </td>
                     {% if question.modify_date != null %}
                         <td>{{ question.modify_date|datetime }}</td>
                     {% else %}

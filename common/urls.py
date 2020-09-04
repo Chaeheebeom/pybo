@@ -13,5 +13,7 @@ urlpatterns=[
     path('profile/',views.profile,name='profile'),
     # 방명록
     path('visitor/', views.visitor, name='visitor'),
+    # 코로나 현황
+    path('covid/',views.covid, name='covid'),
 
 ]

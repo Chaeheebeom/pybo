@@ -28,7 +28,7 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">{{ request.user.username }} </div>
+      <div class="sidebar-heading">{{ request.user.username }}</div>
       <div class="list-group list-group-flush">
         <a href="{% url 'common:visitor' %}" class="list-group-item list-group-item-action bg-light">방명록</a>
         <a href="{% url 'pybo:list' %}" class="list-group-item list-group-item-action bg-light">내가 쓴 글</a>

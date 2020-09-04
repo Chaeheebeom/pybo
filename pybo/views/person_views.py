@@ -54,6 +54,18 @@ def my_voter(request):
     context = {"voter_list": page_obj, 'page': page}
     return render(request, 'person/my_voter_list.html', context)
 
+
+def person_list(request,user_id):
+    page = request.GET.get('page', '1')
+
+    question = Question.objects.filter(author=user_id).order_by('-create_date')
+
+    paginator = Paginator(question, 10)
+    page_obj = paginator.get_page(page)
+
+    context = {"question_list": page_obj, 'page': page}
+    return render(request, 'person/list.html', context)
+
 @login_required(login_url='common:login')
 def person_detail(request,question_id):
     # 1개만 가져옴 실패시 에러발생(all()의 경우 빈 쿼리셋 객체를 반환)

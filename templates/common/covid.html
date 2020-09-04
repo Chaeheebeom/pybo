@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if covidList %}
+    {% for data in covidList %}
+
+        작성 날짜 : {{ data.createDt }} <br>
+        지역 : {{ data.area }}<br>
+        사망자 : {{ data.deathCnt }}<br>
+        확진자 수 : {{ data.defCnt }}<br>
+        전일 대비 증감 수 : {{ data.inDec }}<br>
+        격리 해제 수 : {{ data.isolClearCnt }}<br>
+        격리 중 환자 수 : {{ data.isolIngCnt }}<br>
+        지역 발생 수 : {{ data.localOccCnt }}<br>
+        해외 유입 수 : {{ data.overFlowCnt }}<br>
+        기준 일시 : {{ data.stdDay }}<br>
+
+        {% if data.updateDt %}
+            수정 날짜 : {{ data.updateDt }}<br>
+        {% else %}
+            수정 날짜 : 없음<br>
+        {% endif %}
+        ------------------------<br>
+
+
+
+    {% endfor %}
+
+{% endif %}
+
+
+{% endblock %}

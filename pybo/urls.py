@@ -35,6 +35,9 @@ urlpatterns=[
     path('vote/quetion/<int:question_id>/',vote_views.vote_question,name='vote_question'),
     path('vote/answer/<int:answer_id>/',vote_views.vote_answer,name='vote_answer'),
 
+    #특정사용자가 쓴글
+    path('person/list/<int:user_id>/',person_views.person_list,name='person_list'),
+
     #내가 쓴글
     path('list/',person_views.list,name='list'),
     path('detail/<int:question_id>',person_views.person_detail,name='person_detail'),

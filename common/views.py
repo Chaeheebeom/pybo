@@ -7,6 +7,12 @@ from django.contrib.auth.models import User
 
 from .commonUtils import getTempPassword,send_email
 
+import requests
+import time
+from urllib.parse import unquote
+import xml.etree.ElementTree as el
+
+
 @login_required(login_url='common:login')
 def profile(request):
     return render(request, 'common/profile.html')
@@ -54,3 +60,54 @@ def findpassword(request):
 def visitor(request):
 
     return render(request,'common/visitor.html')
+
+
+
+def covid(request):
+
+    serviceUrl = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson'
+    serviceKey = 'XhXhzNW%2BV19VmW1IWKHPOt5mBgvHbcSxIHHtZcWKjFZwR5PPIAk%2Fn%2FqAyS9hybxU2TPYPmka6MQYYDdReAMmJw%3D%3D'
+    serviceKey_decode = unquote(serviceKey)
+
+    pageNo = '2'
+    numOfRows = '10'
+    startCreateDt = '20200901'
+    endCreateDt = time.strftime('%Y%m%d', time.localtime(time.time()))
+
+    parameters = {"serviceKey": serviceKey_decode, "pageNo": pageNo, "numOfRows": numOfRows,
+                  "startCreateDt": startCreateDt, "endCreateDt": endCreateDt}
+
+    response = requests.get(serviceUrl, params=parameters)
+
+    print(response.text)
+
+    covidList=[]
+
+    if response.status_code == 200:
+        # print("응닫결과 : ",response.text)
+        tree = el.fromstring(response.text)
+        iter = tree.iter(tag="item")
+
+        for element in iter:
+
+            createDt = element.find('createDt')  # 일시
+            deathCnt = element.find('deathCnt')  # 사망자
+            area = element.find('gubun')  # 지역
+            inDec = element.find('incDec')  # 전일대비증감수
+            defCnt = element.find('defCnt')  # 확진자수
+            isolClearCnt = element.find('isolClearCnt')  # 격리해제수
+            isolIngCnt = element.find('isolIngCnt')  # 격리중환자수
+            localOccCnt = element.find('localOccCnt')  # 지역발생수
+            overFlowCnt = element.find('overFlowCnt')  # 해외유입수
+            qurRate = element.find('qurRate')  # 10만명당 발생률
+            id = element.find('seq')  # 게시글번호(고유값)
+            stdDay = element.find('stdDay')  # 기준일시
+            updateDt  = element.find('updateDt ')  # 수정일시
+            data = {"createDt":createDt.text,"deathCnt":deathCnt.text,"area":area.text,"inDec":inDec.text,"isolClearCnt":isolClearCnt.text
+                ,"isolIngCnt":isolIngCnt.text,"localOccCnt":localOccCnt.text,"overFlowCnt":overFlowCnt.text,"qurRate":qurRate.text,
+                "id":id.text,"stdDay":stdDay.text,"defCnt":defCnt.text}
+            covidList.append(data)
+
+    context = {'covidList': covidList}
+    print(covidList)
+    return render(request,'common/covid.html',context)
